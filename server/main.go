@@ -3,10 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
+	"grpc_app/proto"
 	"log"
 	"net"
-
-	"grpc_app/proto"
 
 	"google.golang.org/grpc"
 )

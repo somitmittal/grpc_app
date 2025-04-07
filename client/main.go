@@ -2,10 +2,10 @@ package main
 
 import (
 	"context"
+	"fmt"
+	"grpc_app/proto"
 	"log"
 	"time"
-
-	"grpc_app/proto"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -20,12 +20,28 @@ func main() {
 
 	c := proto.NewGreeterClient(conn)
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-	defer cancel()
+	for {
+		var name string
+		log.Print("Enter your name (or 'quit' to exit): ")
+		_, err := fmt.Scanln(&name)
+		if err != nil {
+			log.Printf("Error reading input: %v", err)
+			continue
+		}
 
-	r, err := c.SayHello(ctx, &proto.HelloRequest{Name: "World"})
-	if err != nil {
-		log.Fatalf("Could not greet: %v", err)
+		if name == "quit" {
+			log.Println("Goodbye!")
+			break
+		}
+
+		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+		r, err := c.SayHello(ctx, &proto.HelloRequest{Name: name})
+		cancel()
+
+		if err != nil {
+			log.Printf("Error: %v", err)
+			continue
+		}
+		log.Printf("Greeting: %s", r.GetMessage())
 	}
-	log.Printf("Greeting: %s", r.GetMessage())
 }
