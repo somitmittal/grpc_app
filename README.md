@@ -1,2 +1,2 @@
 # grpc_app
-Basic GRPC app in python
+Basic GRPC app in GOlang
