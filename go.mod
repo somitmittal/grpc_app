@@ -7,6 +7,7 @@ toolchain go1.24.2
 require google.golang.org/grpc v1.71.1
 
 require (
+	github.com/gorilla/websocket v1.5.3 // indirect
 	golang.org/x/net v0.34.0 // indirect
 	golang.org/x/sys v0.29.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
